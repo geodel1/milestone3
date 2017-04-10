@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use Session;
+use App\Comment;
+use Auth;
 
 class ArticlesController extends Controller
 {	
 	function showArticles(){
     // $articles =['first article','second article', 'third article','fourth article','fifth article'];
 	$articles = Article::all();	
+
     return view('article/display', compact('articles'));
 	}
 
 	function showArticle($id){
     // $articles =['first article','second article', 'third article','fourth article','fifth article'];
 	$article = Article::find($id);
+	
     return view('article/display_one_item', compact('article'));
 	}
 
@@ -65,6 +69,18 @@ class ArticlesController extends Controller
 
 		Session::flash('message', 'Article Successfully Edited');
 		return redirect('articles');
+
+	}
+
+	function addComment($id, Request $request ){
+		$comment = new Comment();
+		
+		$comment->content = $request->content;
+		$comment->user_id = Auth::user()->id;
+		$comment->article_id = $id;
+		$comment->save();
+		return redirect("articles/$id");
+
 
 	}
 

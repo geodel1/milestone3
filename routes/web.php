@@ -27,10 +27,16 @@ Route::post('/articles/create','ArticlesController@saveArticle');
 
 Route::get('/articles/{id}/delete','ArticlesController@deleteArticle');  
 Route::get('/articles/{id}/edit','ArticlesController@editformArticle');  
-Route::post('/articles/{id}/edit','ArticlesController@editArticle');  
+Route::post('/articles/{id}/edit','ArticlesController@editArticle');
+
+Route::post('/articles/{id}/comment','ArticlesController@addComment'); 
 
 
 
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
